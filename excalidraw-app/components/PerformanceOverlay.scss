@@ -25,6 +25,27 @@
     margin-bottom: 8px;
   }
 
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   &__title {
     font-size: 10px;
     font-weight: 700;
@@ -102,5 +123,44 @@
     color: #1e293b;
     font-size: 9px;
     letter-spacing: 0.04em;
+  }
+
+  // Light mode theme
+  &--light {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #1e293b;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+
+    .perf-overlay__title {
+      color: #64748b;
+    }
+
+    .perf-overlay__close {
+      color: #94a3b8;
+
+      &:hover {
+        color: #1e293b;
+      }
+    }
+
+    .perf-overlay__sparkline {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .perf-overlay__label {
+      color: #94a3b8;
+    }
+
+    .perf-overlay__value {
+      color: #1e293b;
+    }
+
+    .perf-overlay__hint {
+      border-top-color: rgba(0, 0, 0, 0.08);
+      color: #94a3b8;
+    }
   }
 }
