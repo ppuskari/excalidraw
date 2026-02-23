@@ -137,6 +137,7 @@ import DebugCanvas, {
   isVisualDebuggerEnabled,
   loadSavedDebugState,
 } from "./components/DebugCanvas";
+import { PerformanceOverlay } from "./components/PerformanceOverlay";
 import { AIComponents } from "./components/AI";
 import { ExcalidrawPlusIframeExport } from "./ExcalidrawPlusIframeExport";
 
@@ -401,6 +402,18 @@ const ExcalidrawWrapper = () => {
 
   const [excalidrawAPI, excalidrawRefCallback] =
     useCallbackRefState<ExcalidrawImperativeAPI>();
+
+  const [showPerfOverlay, setShowPerfOverlay] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && e.key === "p") {
+        setShowPerfOverlay((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const [, setShareDialogState] = useAtom(shareDialogStateAtom);
   const [collabAPI] = useAtom(collabAPIAtom);
@@ -945,7 +958,11 @@ const ExcalidrawWrapper = () => {
             </OverwriteConfirmDialog.Action>
           )}
         </OverwriteConfirmDialog>
-        <AppFooter onChange={() => excalidrawAPI?.refresh()} />
+        <AppFooter
+          onChange={() => excalidrawAPI?.refresh()}
+          showPerfOverlay={showPerfOverlay}
+          onTogglePerfOverlay={() => setShowPerfOverlay((prev) => !prev)}
+        />
         {excalidrawAPI && <AIComponents excalidrawAPI={excalidrawAPI} />}
 
         <TTDDialogTrigger />
@@ -1192,6 +1209,12 @@ const ExcalidrawWrapper = () => {
           />
         )}
       </Excalidraw>
+      {showPerfOverlay && excalidrawAPI && (
+        <PerformanceOverlay
+          excalidrawAPI={excalidrawAPI}
+          onClose={() => setShowPerfOverlay(false)}
+        />
+      )}
     </div>
   );
 };

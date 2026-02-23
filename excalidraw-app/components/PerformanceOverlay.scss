@@ -1,0 +1,106 @@
+.perf-overlay {
+  position: fixed;
+  bottom: 72px;
+  left: 12px;
+  z-index: 9999;
+  width: 188px;
+  background: rgba(13, 17, 23, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  color: #e2e8f0;
+  backdrop-filter: blur(10px);
+  user-select: none;
+  pointer-events: all;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    color: #475569;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: #e2e8f0;
+    }
+  }
+
+  &__sparkline {
+    display: flex;
+    align-items: flex-end;
+    height: 40px;
+    gap: 1px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    padding: 3px;
+    overflow: hidden;
+  }
+
+  &__bar {
+    flex: 1;
+    min-width: 1px;
+    border-radius: 1px 1px 0 0;
+    transition: height 0.15s ease;
+  }
+
+  &__metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  &__label {
+    color: #475569;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__value {
+    color: #e2e8f0;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.15s ease;
+  }
+
+  &__hint {
+    margin-top: 9px;
+    padding-top: 7px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+    color: #1e293b;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+}
