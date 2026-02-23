@@ -4,6 +4,8 @@ import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types";
 
 import "./PerformanceOverlay.scss";
 
+const DARK_MODE_KEY = "excalidraw-perf-overlay-dark";
+
 const HISTORY_LENGTH = 60;
 const UPDATE_INTERVAL_MS = 500;
 
@@ -27,6 +29,18 @@ const getFpsColor = (fps: number): string => {
 };
 
 export const PerformanceOverlay = ({ excalidrawAPI, onClose }: Props) => {
+  const [isDark, setIsDark] = useState<boolean>(
+    () => localStorage.getItem(DARK_MODE_KEY) !== "false",
+  );
+
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      localStorage.setItem(DARK_MODE_KEY, String(next));
+      return next;
+    });
+  };
+
   const [metrics, setMetrics] = useState<Metrics>({
     fps: 0,
     frameTime: 0,
@@ -96,16 +110,25 @@ export const PerformanceOverlay = ({ excalidrawAPI, onClose }: Props) => {
   const fpsColor = getFpsColor(metrics.fps);
 
   return (
-    <div className="perf-overlay">
+    <div className={`perf-overlay${isDark ? "" : " perf-overlay--light"}`}>
       <div className="perf-overlay__header">
         <span className="perf-overlay__title">⚡ Performance</span>
-        <button
-          className="perf-overlay__close"
-          onClick={onClose}
-          title="Close (Alt+P)"
-        >
-          ✕
-        </button>
+        <div className="perf-overlay__controls">
+          <button
+            className="perf-overlay__theme-toggle"
+            onClick={toggleTheme}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDark ? "☀️" : "🌙"}
+          </button>
+          <button
+            className="perf-overlay__close"
+            onClick={onClose}
+            title="Close (Alt+P)"
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       <div className="perf-overlay__sparkline" title="FPS history">
